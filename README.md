@@ -1,8 +1,3 @@
-<a href="https://sutio-bot.sutio.co/">
-  <img alt="Next.js 14 and App Router-ready AI SUTIObot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Next.js AI SUTIObot</h1>
-</a>
-
 <p align="center">
   Open-Source AI SUTIObot Template Built With Next.js and the AI SDK by Vercel.
 </p>
