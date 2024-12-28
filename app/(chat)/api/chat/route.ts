@@ -205,8 +205,6 @@ export async function POST(request: Request) {
                 content: "",
               });
 
-              console.log(kind, "----- kind --------");
-
               if (kind === "text") {
                 const { fullStream } = streamText({
                   model: customModel(model.apiIdentifier),
