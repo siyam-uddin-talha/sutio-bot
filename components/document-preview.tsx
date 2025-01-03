@@ -233,8 +233,6 @@ const DocumentContent = ({ document }: { document: Document }) => {
     suggestions: [],
   };
 
-  console.log(document.kind);
-
   return (
     <div className={containerClassName}>
       {document.kind === "text" ? (
@@ -249,3 +247,57 @@ const DocumentContent = ({ document }: { document: Document }) => {
     </div>
   );
 };
+
+interface GenerateImagePreviewProps {
+  isReadonly: boolean;
+  result?: any;
+  args?: any;
+}
+
+export function GenerateImagePreview({
+  isReadonly,
+  result,
+  args,
+}: GenerateImagePreviewProps) {
+  if (!result) {
+    return <LoadingSkeleton />;
+  }
+
+  const { prompt, imageUrl } = result;
+
+  return (
+    <div className="generate-image-preview">
+      {imageUrl && (
+        <>
+          <h2 className="text-xl font-bold mb-4">Generated Image</h2>
+          <div className="image-container">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt={`Generated based on the prompt: "${prompt}"`}
+              className="w-full rounded-md shadow-md"
+            />
+          </div>
+        </>
+      )}
+      {prompt && (
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold">Prompt</h3>
+          <p className="text-gray-700">{prompt}</p>
+        </div>
+      )}
+      {/* {!isReadonly && (
+        <div className="mt-4">
+          <button
+            className="btn-primary"
+            onClick={() => {
+              console.log("Image downloaded!");
+            }}
+          >
+            Download Image
+          </button>
+        </div>
+      )} */}
+    </div>
+  );
+}

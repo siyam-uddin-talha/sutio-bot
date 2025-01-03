@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import Image from "next/image";
+import { APP_NAME } from "@/lib/config";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
@@ -32,11 +34,11 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               onClick={() => {
                 setOpenMobile(false);
               }}
-              className="flex flex-row gap-3 items-center"
+              className="flex flex-row gap-2 items-center cursor-pointer relative"
             >
-              <span className="text-lg font-semibold px-2 hover:bg-muted rounded-md cursor-pointer">
-                SUTIObot
-              </span>
+              <Image src={"/sutio.png"} width={20} height={20} alt=""></Image>
+
+              <span className="text-lg font-semibold px-2">{APP_NAME}</span>
             </Link>
             <Tooltip>
               <TooltipTrigger asChild>

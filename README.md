@@ -1,5 +1,5 @@
 <p align="center">
-  Open-Source AI SUTIObot Template Built With Next.js and the AI SDK by Vercel.
+  Open-Source AI SutioBotbot Template Built With Next.js and the AI SDK by Vercel.
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@ Default: OpenAI `gpt-4o`. Easily switch to other providers like Anthropic or Coh
 
 Deploy to Vercel with one click:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-SUTIObot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-SUTIObot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20SUTIObot&demo-description=An%20Open-Source%20AI%20SUTIObot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fsutio-bot.sutio.co&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-SutioBotbot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-SutioBotbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20SutioBotbot&demo-description=An%20Open-Source%20AI%20SutioBotbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2FSutioBot-bot.SutioBot.co&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
 
 ## Running Locally
 

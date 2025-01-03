@@ -16,24 +16,28 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: "Create a story about",
-      label: "a brave little dragon",
-      action: "Create a story about a brave little dragon. with a image",
+      title: "Explore the Galaxy",
+      label: "with a courageous astronaut",
+      action:
+        "Create a sci-fi story about a courageous astronaut exploring unknown galaxies. Include an image of a spaceship amidst colorful nebulae.",
     },
     {
-      title: "Tell me a bedtime story",
-      label: "about a magical forest",
-      action: "Tell me a bedtime story about a magical forest. with a image",
+      title: "Design a Workout Routine",
+      label: "for building strength at home",
+      action:
+        "Create a simple workout routine for building strength at home, with no equipment needed.",
     },
     {
-      title: "Make up a story",
-      label: "about a talking cat",
-      action: "Make up a story about a talking cat. with a image",
+      title: "Plan a Healthy Meal",
+      label: "for a busy workday",
+      action:
+        "Suggest a healthy meal plan for a busy workday, including quick recipes and snack ideas.",
     },
     {
-      title: "Write an adventure",
-      label: "featuring a young pirate",
-      action: "Write an adventure featuring a young pirate. with a image",
+      title: "Learn a New Skill",
+      label: "like playing the guitar",
+      action:
+        "Provide beginner tips and resources for learning how to play the guitar.",
     },
   ];
 

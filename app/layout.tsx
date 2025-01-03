@@ -4,9 +4,10 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
+import { APP_NAME } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "SUTIObot | sutio",
+  title: `${APP_NAME} | SUTIO`,
 };
 
 export const viewport = {

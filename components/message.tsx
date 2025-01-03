@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { MessageEditor } from "./message-editor";
-import { DocumentPreview } from "./document-preview";
+import { DocumentPreview, GenerateImagePreview } from "./document-preview";
 
 const PurePreviewMessage = ({
   chatId,
@@ -135,7 +135,7 @@ const PurePreviewMessage = ({
                     return (
                       <div key={toolCallId}>
                         {toolName === "generateImage" ? (
-                          <DocumentPreview
+                          <GenerateImagePreview
                             result={result}
                             isReadonly={isReadonly}
                           />
@@ -172,7 +172,10 @@ const PurePreviewMessage = ({
                       })}
                     >
                       {toolName === "generateImage" ? (
-                        <DocumentPreview args={args} isReadonly={isReadonly} />
+                        <GenerateImagePreview
+                          args={args}
+                          isReadonly={isReadonly}
+                        />
                       ) : toolName === "getWeather" ? (
                         <Weather />
                       ) : toolName === "createDocument" ? (

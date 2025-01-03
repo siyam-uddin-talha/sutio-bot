@@ -23,13 +23,13 @@ export const Overview = () => {
           This is an{" "}
           <Link
             className="font-medium underline underline-offset-4"
-            href="https://github.com/vercel/ai-SUTIObot"
+            href="https://github.com/vercel/ai-SutioBotbot"
             target="_blank"
           >
             open source
           </Link>{" "}
-          SUTIObot template built with Next.js and the AI SDK by Vercel. It uses
-          the{" "}
+          SutioBotbot template built with Next.js and the AI SDK by Vercel. It
+          uses the{" "}
           <code className="rounded-md bg-muted px-1 py-0.5">streamText</code>{" "}
           function in the server and the{" "}
           <code className="rounded-md bg-muted px-1 py-0.5">useChat</code> hook
