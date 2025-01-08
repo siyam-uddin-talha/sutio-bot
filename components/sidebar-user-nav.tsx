@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Avatar from "./Avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 export function SidebarUserNav({ user }: { user: User }) {
   const { setTheme, theme } = useTheme();
@@ -27,12 +27,12 @@ export function SidebarUserNav({ user }: { user: User }) {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-10">
-              <Avatar
-                rounded
-                size="small"
-                alt={user?.email?.slice(0, 1) || "U"}
-              ></Avatar>
+            <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-14">
+              <Avatar>
+                <AvatarFallback className="text-lg">
+                  {user?.email?.slice(0, 1)?.toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
               <span className="truncate">{user?.email}</span>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
