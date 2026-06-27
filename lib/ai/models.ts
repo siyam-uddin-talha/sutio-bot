@@ -9,17 +9,11 @@ export interface Model {
 
 export const models: Array<Model> = [
   {
-    id: "gpt-4o-mini",
-    label: "GPT 4o mini",
-    apiIdentifier: "gpt-4o-mini",
-    description: "For Fast, lightweight",
-  },
-  {
-    id: "gpt-4o",
-    label: "GPT 4o",
-    apiIdentifier: "gpt-4o",
-    description: "For complex, multi-step",
+    id: 'gpt-5.4-mini',
+    label: 'GPT-5.4 mini',
+    apiIdentifier: 'gpt-5.4-mini',
+    description: 'Latest mini model — fast, cost-efficient, actively supported',
   },
 ] as const;
 
-export const DEFAULT_MODEL_NAME: string = "gpt-4o-mini";
+export const DEFAULT_MODEL_NAME: string = 'gpt-5.4-mini';
