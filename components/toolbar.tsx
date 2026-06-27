@@ -11,6 +11,8 @@ import {
 import {
   type Dispatch,
   memo,
+  type ReactElement,
+  type RefObject,
   type SetStateAction,
   useEffect,
   useRef,
@@ -48,7 +50,7 @@ type ToolProps = {
     | 'add-comments'
     | 'add-logs';
   description: string;
-  icon: JSX.Element;
+  icon: ReactElement;
   selectedTool: string | null;
   setSelectedTool: Dispatch<SetStateAction<string | null>>;
   isToolbarVisible?: boolean;
@@ -295,7 +297,7 @@ const toolsByBlockKind: Record<
       | 'add-comments'
       | 'add-logs';
     description: string;
-    icon: JSX.Element;
+    icon: ReactElement;
   }>
 > = {
   text: [
@@ -410,12 +412,14 @@ const PureToolbar = ({
   blockKind: 'text' | 'code';
 }) => {
   const toolbarRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  useOnClickOutside(toolbarRef, () => {
+  useOnClickOutside(toolbarRef as RefObject<HTMLElement>, () => {
     setIsToolbarVisible(false);
     setSelectedTool(null);
   });
