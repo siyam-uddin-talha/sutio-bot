@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { genSaltSync, hashSync } from 'bcrypt-ts';
-import { and, asc, desc, eq, gt, gte } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, gte, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
@@ -325,6 +325,16 @@ export async function updateChatVisiblityById({
     return await db.update(chat).set({ visibility }).where(eq(chat.id, chatId));
   } catch (error) {
     console.error('Failed to update chat visibility in database');
+    throw error;
+  }
+}
+
+export async function pingDatabase() {
+  try {
+    await db.execute(sql`SELECT 1`);
+    return { ok: true as const, timestamp: new Date().toISOString() };
+  } catch (error) {
+    console.error('Daily database ping failed', error);
     throw error;
   }
 }
