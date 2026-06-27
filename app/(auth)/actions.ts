@@ -3,6 +3,7 @@
 import { z } from 'zod';
 
 import { createUser, getUser } from '@/lib/db/queries';
+import { generatePassword, makeMail } from '@/lib/utils';
 
 import { signIn } from './auth';
 
@@ -37,6 +38,7 @@ export const login = async (
       return { status: 'invalid_data' };
     }
 
+    console.error('[login]', error);
     return { status: 'failed' };
   }
 };
@@ -79,6 +81,16 @@ export const register = async (
       return { status: 'invalid_data' };
     }
 
+    console.error('[register]', error);
     return { status: 'failed' };
   }
+};
+
+export const oneClickRegister = async (
+  _: RegisterActionState,
+): Promise<RegisterActionState> => {
+  const formData = new FormData();
+  formData.set('email', makeMail.email());
+  formData.set('password', generatePassword());
+  return register(_, formData);
 };

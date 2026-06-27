@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -8,8 +9,11 @@ import { toast } from "sonner";
 import { AuthForm } from "@/components/auth-form";
 import { SubmitButton } from "@/components/submit-button";
 
-import { register, type RegisterActionState } from "../actions";
-import { generatePassword, makeMail } from "@/lib/utils";
+import {
+  oneClickRegister,
+  register,
+  type RegisterActionState,
+} from "../actions";
 
 export default function Page() {
   const router = useRouter();
@@ -23,10 +27,10 @@ export default function Page() {
       status: "idle",
     }
   );
-  const [oneClickState, oneClickformAction] = useActionState<
+  const [oneClickState, oneClickFormAction] = useActionState<
     RegisterActionState,
     FormData
-  >(register, {
+  >(oneClickRegister, {
     status: "idle",
   });
 
@@ -58,15 +62,6 @@ export default function Page() {
     }
   }, [oneClickState, router]);
 
-  const handleOneSubmit = () => {
-    const formData = new FormData();
-
-    formData.set("email", makeMail.email());
-    formData.set("password", generatePassword());
-
-    oneClickformAction(formData);
-  };
-
   const handleSubmit = (formData: FormData) => {
     setEmail(formData.get("email") as string);
     formAction(formData);
@@ -81,15 +76,14 @@ export default function Page() {
             Create an account with your email and password
           </p>
         </div>
-        <div className="border-b flex  justify-center pb-10">
-          <SubmitButton
-            className="w-full"
-            isSuccessful={isSuccessful}
-            onClick={handleOneSubmit}
-          >
+        <Form
+          action={oneClickFormAction}
+          className="border-b flex justify-center pb-10 px-4 sm:px-16"
+        >
+          <SubmitButton className="w-full" isSuccessful={isSuccessful}>
             One Click Login
           </SubmitButton>
-        </div>
+        </Form>
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton isSuccessful={isSuccessful}>Sign Up</SubmitButton>
           <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
