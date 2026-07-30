@@ -46,6 +46,7 @@ export const SITE = {
     alt: "SutioBot — Free Intelligent AI Assistant",
     type: "image/png",
   },
+  googleVerificationCode: "googlef57f464e597e6551",
 } as const;
 
 export function absoluteUrl(path = "/") {

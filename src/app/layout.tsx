@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: SITE.googleVerificationCode,
+  },
 };
 
 export const viewport: Viewport = {

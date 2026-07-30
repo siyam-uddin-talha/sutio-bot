@@ -263,41 +263,35 @@ export function GenerateImagePreview({
     return <LoadingSkeleton />;
   }
 
-  const { prompt, imageUrl } = result;
+  if (result.error) {
+    return (
+      <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm my-2">
+        <p className="font-semibold mb-1">Image Generation Failed</p>
+        <p className="opacity-90">{result.error}</p>
+      </div>
+    );
+  }
+
+  const prompt = result.prompt || args?.prompt;
+  const imageUrl = result.imageUrl || result.url;
 
   return (
-    <div className="generate-image-preview">
+    <div className="generate-image-preview space-y-3 my-2">
       {imageUrl && (
-        <>
-          <h2 className="text-xl font-bold mb-4">Generated Image</h2>
-          <div className="image-container">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imageUrl}
-              alt={`Generated based on the prompt: "${prompt}"`}
-              className="w-full rounded-md shadow-md"
-            />
-          </div>
-        </>
+        <div className="image-container overflow-hidden rounded-xl border border-border shadow-sm bg-muted/20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt={prompt ? `Generated image for prompt: "${prompt}"` : "Generated Image"}
+            className="w-full h-auto object-cover max-h-[512px]"
+          />
+        </div>
       )}
       {prompt && (
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold">Prompt</h3>
-          <p className="text-gray-700">{prompt}</p>
+        <div className="text-xs text-muted-foreground bg-muted/40 p-2.5 rounded-lg border border-border/50">
+          <span className="font-semibold text-foreground">Prompt:</span> {prompt}
         </div>
       )}
-      {/* {!isReadonly && (
-        <div className="mt-4">
-          <button
-            className="btn-primary"
-            onClick={() => {
-              console.log("Image downloaded!");
-            }}
-          >
-            Download Image
-          </button>
-        </div>
-      )} */}
     </div>
   );
 }

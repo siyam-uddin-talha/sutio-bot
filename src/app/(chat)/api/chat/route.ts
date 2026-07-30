@@ -84,7 +84,7 @@ export async function POST(request: Request) {
       {
         status: 429,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 
@@ -139,28 +139,66 @@ export async function POST(request: Request) {
             }),
             execute: async ({ prompt }) => {
               try {
-                const response = await fetch(
+                const apiKey = process.env.OPENAI_API_KEY;
+                if (!apiKey) {
+                  return {
+                    error:
+                      "OpenAI API key is missing. Please set OPENAI_API_KEY in environment variables.",
+                    prompt,
+                  };
+                }
+
+                let response = await fetch(
                   "https://api.openai.com/v1/images/generations",
                   {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
-                      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+                      Authorization: `Bearer ${apiKey}`,
                     },
                     body: JSON.stringify({
+                      model: "dall-e-3",
                       prompt,
                       n: 1,
                       size: "512x512",
                     }),
-                  }
+                  },
                 );
 
                 if (!response.ok) {
-                  throw new Error("Failed to generate image");
+                  const errText = await response.text();
+                  console.warn(
+                    "DALL-E 3 image generation failed, trying DALL-E 2 fallback:",
+                    errText,
+                  );
+                  response = await fetch(
+                    "https://api.openai.com/v1/images/generations",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${apiKey}`,
+                      },
+                      body: JSON.stringify({
+                        model: "dall-e-2",
+                        prompt,
+                        n: 1,
+                        size: "512x512",
+                      }),
+                    },
+                  );
+                }
+
+                if (!response.ok) {
+                  const errorData = await response.json().catch(() => null);
+                  const errorMsg =
+                    errorData?.error?.message || "Failed to generate image";
+                  console.error("OpenAI Image generation error:", errorMsg);
+                  return { error: errorMsg, prompt };
                 }
 
                 const data = await response.json();
-                const imageUrl = data.data[0]?.url;
+                const imageUrl = data.data?.[0]?.url;
 
                 if (imageUrl) {
                   dataStream.writeData({
@@ -169,10 +207,13 @@ export async function POST(request: Request) {
                   });
                 }
 
-                return { url: imageUrl };
-              } catch (error) {
+                return { url: imageUrl, imageUrl, prompt };
+              } catch (error: any) {
                 console.error("Image generation error:", error);
-                return { error: "Failed to generate image" };
+                return {
+                  error: error?.message || "Failed to generate image",
+                  prompt,
+                };
               }
             },
           },
@@ -184,7 +225,7 @@ export async function POST(request: Request) {
             }),
             execute: async ({ latitude, longitude }) => {
               const response = await fetch(
-                `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&hourly=temperature_2m&daily=sunrise,sunset&timezone=auto`
+                `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&hourly=temperature_2m&daily=sunrise,sunset&timezone=auto`,
               );
 
               const weatherData = await response.json();
@@ -505,7 +546,7 @@ export async function POST(request: Request) {
                       content: message.content,
                       createdAt: new Date(),
                     };
-                  }
+                  },
                 ),
               });
             } catch (error) {
