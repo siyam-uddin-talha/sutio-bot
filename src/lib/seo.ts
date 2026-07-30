@@ -40,7 +40,7 @@ export const SITE = {
   },
   /** Social / link preview image (Open Graph + Twitter) */
   ogImage: {
-    path: "/logo.png",
+    path: "/og.png",
     width: 1200,
     height: 630,
     alt: "SutioBot — Free Intelligent AI Assistant",
