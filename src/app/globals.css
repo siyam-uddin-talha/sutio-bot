@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 69, 26, 3;
+  --background-start-rgb: 253, 249, 240;
+  --background-end-rgb: 253, 249, 240;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 253, 249, 240;
+    --background-start-rgb: 20, 12, 6;
+    --background-end-rgb: 20, 12, 6;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 42 69% 96%;        /* #fdf9f0 - Fresh warm natural honey glaze */
+    --foreground: 21 92% 14%;        /* #451a03 - Deep toasted honey crust */
+    --card: 45 100% 99%;             /* #fffefb - Whipped wildflower butter deck */
+    --card-foreground: 21 92% 14%;   /* #451a03 */
+    --popover: 45 100% 99%;
+    --popover-foreground: 21 92% 14%;
+    --primary: 35 92% 44%;           /* #d97706 - Rich yellow chamomile blossom */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 48 94% 89%;         /* #fef3c7 - Soothing golden honey syrup */
+    --secondary-foreground: 21 92% 14%;
+    --muted: 42 50% 94%;             /* #faf3e6 */
+    --muted-foreground: 21 87% 26%;  /* #78350f - Warm secondary amber */
+    --accent: 48 94% 89%;            /* #fef3c7 */
+    --accent-foreground: 35 92% 44%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 68% 87%;            /* #f4e2c6 - Floral blossom outlines */
+    --input: 36 68% 87%;             /* #f4e2c6 */
+    --ring: 35 92% 44%;              /* #d97706 */
+    --radius: 1.5rem;                /* rounded-3xl */
+    --sidebar-background: 45 100% 99%;
+    --sidebar-foreground: 21 92% 14%;
+    --sidebar-primary: 35 92% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 48 94% 89%;
+    --sidebar-accent-foreground: 35 92% 44%;
+    --sidebar-border: 36 68% 87%;
+    --sidebar-ring: 35 92% 44%;
+  }
+  .dark {
+    --background: 24 40% 6%;
+    --foreground: 45 100% 96%;
+    --card: 24 35% 10%;
+    --card-foreground: 45 100% 96%;
+    --popover: 24 35% 10%;
+    --popover-foreground: 45 100% 96%;
+    --primary: 35 92% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 30% 16%;
+    --secondary-foreground: 45 100% 96%;
+    --muted: 24 30% 14%;
+    --muted-foreground: 36 68% 70%;
+    --accent: 24 30% 20%;
+    --accent-foreground: 45 100% 96%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 24 30% 22%;
+    --input: 24 30% 22%;
+    --ring: 35 92% 44%;
+    --sidebar-background: 24 35% 10%;
+    --sidebar-foreground: 45 100% 96%;
+    --sidebar-primary: 35 92% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 24 30% 18%;
+    --sidebar-accent-foreground: 45 100% 96%;
+    --sidebar-border: 24 30% 22%;
+    --sidebar-ring: 35 92% 44%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#fdf9f0] dark:bg-[#140c06] text-[#451a03] dark:text-[#fdf9f0] font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-outfit font-bold tracking-tight text-[#451a03] dark:text-[#fdf9f0];
+  }
+
+  @font-face {
+    font-family: "geist";
+    font-style: normal;
+    font-weight: 100 900;
+    src: url(/fonts/geist.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: "geist-mono";
+    font-style: normal;
+    font-weight: 100 900;
+    src: url(/fonts/geist-mono.woff2) format("woff2");
+  }
+}
+
+.skeleton {
+  * {
+    pointer-events: none !important;
+  }
+
+  *[class^="text-"] {
+    color: transparent;
+    @apply rounded-2xl bg-amber-900/10 select-none animate-pulse;
+  }
+
+  .skeleton-bg {
+    @apply bg-amber-900/10;
+  }
+
+  .skeleton-div {
+    @apply bg-amber-900/20 animate-pulse;
+  }
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.cm-editor,
+.cm-gutters {
+  @apply bg-[#fffefb] dark:bg-[#18100a] outline-none selection:bg-amber-100 !important;
+}
+
+.ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
+.ͼo.cm-selectionBackground,
+.ͼo.cm-content::selection {
+  @apply bg-[#fef3c7] dark:bg-amber-950 !important;
+}
+
+.cm-activeLine,
+.cm-activeLineGutter {
+  @apply bg-transparent !important;
+}
+
+.cm-activeLine {
+  @apply rounded-r-2xl !important;
+}
+
+.cm-lineNumbers {
+  @apply min-w-7;
+}
+
+.cm-foldGutter {
+  @apply min-w-3;
+}
+
+.cm-lineNumbers .cm-activeLineGutter {
+  @apply rounded-l-2xl !important;
+}
+
+.suggestion-highlight {
+  @apply bg-[#fef3c7] hover:bg-[#fde68a] text-[#d97706];
+}
