@@ -13,8 +13,9 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const pathname = nextUrl.pathname;
 
-      // Google Search Console HTML file + other static assets
       if (
+        pathname === '/sitemap.xml' ||
+        pathname === '/robots.txt' ||
         /^\/google[a-z0-9]+\.html$/i.test(pathname) ||
         /\.(html|ico|png|jpg|jpeg|gif|webp|svg|txt|xml|json|css|js|woff2?)$/i.test(
           pathname,
