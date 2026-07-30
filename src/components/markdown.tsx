@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { CodeBlock } from './code-block';
 
 const components: Partial<Components> = {
-  code: CodeBlock,
+  code: CodeBlock as Components['code'],
   pre: ({ children }) => <>{children}</>,
   ol: ({ node, children, ...props }) => {
     return (
