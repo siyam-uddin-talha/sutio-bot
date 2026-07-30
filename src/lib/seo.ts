@@ -10,7 +10,7 @@ export const OWNER = {
 } as const;
 
 /** Canonical product domain. Override with NEXT_PUBLIC_SITE_URL if needed. */
-export const DEFAULT_SITE_URL = "https://sutio.bot.sutio.co";
+export const DEFAULT_SITE_URL = "https://bot.sutio.co";
 
 export const SITE = {
   name: "SutioBot",

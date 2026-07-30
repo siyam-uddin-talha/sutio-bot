@@ -11,6 +11,18 @@ export const authConfig = {
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
+      const pathname = nextUrl.pathname;
+
+      // Google Search Console HTML file + other static assets
+      if (
+        /^\/google[a-z0-9]+\.html$/i.test(pathname) ||
+        /\.(html|ico|png|jpg|jpeg|gif|webp|svg|txt|xml|json|css|js|woff2?)$/i.test(
+          pathname,
+        )
+      ) {
+        return true;
+      }
+
       const isLoggedIn = !!auth?.user;
       const isOnChat = nextUrl.pathname.startsWith("/");
       const isOnRegister = nextUrl.pathname.startsWith("/register");
