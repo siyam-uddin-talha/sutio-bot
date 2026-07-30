@@ -35,10 +35,11 @@ const components: Partial<Components> = {
       </span>
     );
   },
-  a: ({ node, children, ...props }) => {
+  a: ({ node, children, href, ...props }) => {
     return (
       <Link
-        className="text-blue-500 hover:underline"
+        href={href || '#'}
+        className="text-[#d97706] underline-offset-4 hover:underline"
         target="_blank"
         rel="noreferrer"
         {...props}
