@@ -36,7 +36,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               }}
               className="flex flex-row gap-2 items-center cursor-pointer relative"
             >
-              <Image src="/sutio.png" width={20} height={20} alt="Sutio Logo" unoptimized />
+              <Image src="/logo.png" width={20} height={20} alt="Sutio Logo" unoptimized />
 
               <span className="text-lg font-semibold px-2">{APP_NAME}</span>
             </Link>
@@ -63,7 +63,20 @@ export function AppSidebar({ user }: { user: User | undefined }) {
       <SidebarContent>
         <SidebarHistory user={user} />
       </SidebarContent>
-      <SidebarFooter>{user && <SidebarUserNav user={user} />}</SidebarFooter>
+      <SidebarFooter className="p-3 gap-2">
+        {user && <SidebarUserNav user={user} />}
+        <div className="text-center text-[11px] text-muted-foreground pt-1">
+          Powered by{" "}
+          <a
+            href="https://www.sutio.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium underline underline-offset-2 hover:text-foreground transition-colors"
+          >
+            Sutio
+          </a>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

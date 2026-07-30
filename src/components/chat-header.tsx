@@ -15,6 +15,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { VisibilityType } from "./visibility-selector";
 import { APP_NAME } from "@/lib/config";
 
+import useSWR from "swr";
+import { fetcher } from "@/lib/utils";
+
 function PureChatHeader({
   chatId,
   selectedModelId,
@@ -31,6 +34,12 @@ function PureChatHeader({
 
   const { width: windowWidth } = useWindowSize();
 
+  const { data: usage } = useSWR<{
+    tokensUsed: number;
+    remainingTokens: number;
+    dailyLimit: number;
+  }>("/api/user/usage", fetcher);
+
   return (
     <header className="flex sticky top-0 bg-background py-2 items-center px-2 md:px-4 gap-2 justify-between z-10 border-b md:border-b-0 border-sidebar-border/50">
       <div className="flex items-center gap-2.5 min-w-0">
@@ -41,7 +50,7 @@ function PureChatHeader({
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
           <Image
-            src="/sutio.png"
+            src="/logo.png"
             width={24}
             height={24}
             alt="Sutio Logo"
@@ -75,12 +84,25 @@ function PureChatHeader({
         )}
       </div>
 
-      {!isReadonly && (
-        <ModelSelector
-          selectedModelId={selectedModelId}
-          className="shrink-0"
-        />
-      )}
+      <div className="flex items-center gap-2">
+        {usage && typeof usage.remainingTokens === "number" && (
+          <div
+            className="flex items-center gap-1.5 px-3 py-1 bg-[#fef3c7] dark:bg-amber-950/60 text-[#d97706] dark:text-amber-400 border border-[#fde68a] dark:border-amber-800/50 rounded-full text-xs font-bold"
+            title={`Used ${usage.tokensUsed} of ${usage.dailyLimit} daily tokens. Resets at midnight UTC.`}
+          >
+            <span>
+              {usage.remainingTokens.toLocaleString()} / {Math.round(usage.dailyLimit / 1000)}k tokens
+            </span>
+          </div>
+        )}
+
+        {!isReadonly && (
+          <ModelSelector
+            selectedModelId={selectedModelId}
+            className="shrink-0"
+          />
+        )}
+      </div>
     </header>
   );
 }

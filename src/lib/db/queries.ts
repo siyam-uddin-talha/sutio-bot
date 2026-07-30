@@ -15,6 +15,7 @@ import {
   type Message,
   message,
   vote,
+  tokenUsage,
 } from './schema';
 import { BlockKind } from '@/components/block';
 
@@ -348,4 +349,69 @@ export async function pingDatabase() {
     throw error;
   }
 }
+
+export const DAILY_TOKEN_LIMIT = 5000;
+
+export function getTodayDateString(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
+export async function getTodayTokenUsage(userId: string): Promise<number> {
+  try {
+    const today = getTodayDateString();
+    const [record] = await db
+      .select({ tokensUsed: tokenUsage.tokensUsed })
+      .from(tokenUsage)
+      .where(and(eq(tokenUsage.userId, userId), eq(tokenUsage.date, today)));
+
+    return record ? record.tokensUsed : 0;
+  } catch (error) {
+    console.error('Failed to get today token usage from database', error);
+    return 0;
+  }
+}
+
+export async function incrementTodayTokenUsage(
+  userId: string,
+  tokens: number
+): Promise<number> {
+  try {
+    const today = getTodayDateString();
+    const [existing] = await db
+      .select()
+      .from(tokenUsage)
+      .where(and(eq(tokenUsage.userId, userId), eq(tokenUsage.date, today)));
+
+    if (existing) {
+      const newTotal = existing.tokensUsed + tokens;
+      await db
+        .update(tokenUsage)
+        .set({ tokensUsed: newTotal })
+        .where(and(eq(tokenUsage.userId, userId), eq(tokenUsage.date, today)));
+      return newTotal;
+    } else {
+      await db.insert(tokenUsage).values({
+        userId,
+        date: today,
+        tokensUsed: tokens,
+      });
+      return tokens;
+    }
+  } catch (error) {
+    console.error('Failed to increment token usage in database', error);
+    return 0;
+  }
+}
+
+export async function getUserUsageDetails(userId: string) {
+  const tokensUsed = await getTodayTokenUsage(userId);
+  const remainingTokens = Math.max(0, DAILY_TOKEN_LIMIT - tokensUsed);
+  return {
+    tokensUsed,
+    remainingTokens,
+    dailyLimit: DAILY_TOKEN_LIMIT,
+    isLimitReached: tokensUsed >= DAILY_TOKEN_LIMIT,
+  };
+}
+
 

@@ -839,7 +839,7 @@ export const SparklesIcon = ({ size = 16 }: { size?: number }) => (
     <Image
       width={8 | size}
       height={8 | size}
-      src="/sutio.png"
+      src="/logo.png"
       alt="Sutio"
       className="grayscale"
     />

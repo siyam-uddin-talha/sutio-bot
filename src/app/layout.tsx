@@ -1,20 +1,58 @@
 import type { Metadata, Viewport } from "next";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
 import { APP_NAME } from "@/lib/config";
 
+import { SITE, absoluteUrl, ogImageUrl } from "@/lib/seo";
+
 export const metadata: Metadata = {
-  title: `${APP_NAME} | SUTIO`,
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} — Free AI Assistant & ChatGPT Alternative`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  keywords: [...SITE.keywords],
+  authors: [{ name: "Sutio", url: "https://www.sutio.co/" }],
+  creator: "Sutio",
+  publisher: "Sutio",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
-    icon: [
-      { url: "/sutio.png", type: "image/png" },
-      { url: "/favicon.ico" },
+    icon: [{ url: "/logo.png", type: "image/png" }, { url: "/favicon.ico" }],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE.url,
+    title: `${SITE.name} — Free AI Assistant & ChatGPT Alternative`,
+    description: SITE.description,
+    siteName: SITE.name,
+    images: [
+      {
+        url: SITE.ogImage.path,
+        secureUrl: ogImageUrl(),
+        width: SITE.ogImage.width,
+        height: SITE.ogImage.height,
+        alt: SITE.ogImage.alt,
+      },
     ],
-    shortcut: "/sutio.png",
-    apple: "/sutio.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name} — Free AI Assistant & ChatGPT Alternative`,
+    description: SITE.description,
+    images: [SITE.ogImage.path],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -76,6 +114,7 @@ export default async function RootLayout({
           <Toaster position="top-center" />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

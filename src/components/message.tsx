@@ -64,7 +64,7 @@ const PurePreviewMessage = ({
           {message.role === "assistant" && (
             <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border bg-background overflow-hidden">
               <Image
-                src="/sutio.png"
+                src="/logo.png"
                 width={20}
                 height={20}
                 alt="Sutio Bot"
@@ -259,7 +259,7 @@ export const ThinkingMessage = () => {
       >
         <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border bg-background overflow-hidden">
           <Image
-            src="/sutio.png"
+            src="/logo.png"
             width={20}
             height={20}
             alt="Sutio Bot"

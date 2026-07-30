@@ -47,6 +47,7 @@ export function Chat({
     experimental_throttle: 100,
     onFinish: () => {
       mutate('/api/history');
+      mutate('/api/user/usage');
     },
   });
 
@@ -79,7 +80,7 @@ export function Chat({
           isBlockVisible={isBlockVisible}
         />
 
-        <form className="flex mx-auto px-2 sm:px-4 bg-background pb-3 md:pb-6 gap-2 w-full md:max-w-3xl">
+        <form className="flex flex-col mx-auto px-2 sm:px-4 bg-background pb-3 md:pb-4 gap-2 w-full md:max-w-3xl">
           {!isReadonly && (
             <MultimodalInput
               chatId={id}
@@ -95,6 +96,17 @@ export function Chat({
               append={append}
             />
           )}
+          <div className="text-center text-[11px] text-muted-foreground/80 mt-0.5">
+            Powered by{" "}
+            <a
+              href="https://www.sutio.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-2 hover:text-foreground transition-colors"
+            >
+              Sutio
+            </a>
+          </div>
         </form>
       </div>
 

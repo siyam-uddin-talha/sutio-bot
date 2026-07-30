@@ -19,6 +19,8 @@ import {
   deleteChatById,
   getChatById,
   getDocumentById,
+  getUserUsageDetails,
+  incrementTodayTokenUsage,
   saveChat,
   saveDocument,
   saveMessages,
@@ -69,6 +71,21 @@ export async function POST(request: Request) {
 
   if (!session || !session.user || !session.user.id) {
     return new Response("Unauthorized", { status: 401 });
+  }
+
+  const usageDetails = await getUserUsageDetails(session.user.id);
+
+  if (usageDetails.isLimitReached) {
+    return new Response(
+      JSON.stringify({
+        error:
+          "Daily limit reached. You have used your 3,000 token limit for today. Your usage will reset at midnight UTC.",
+      }),
+      {
+        status: 429,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 
   const model = models.find((model) => model.id === modelId);
@@ -461,9 +478,12 @@ export async function POST(request: Request) {
             },
           },
         },
-        onFinish: async ({ response }) => {
+        onFinish: async ({ response, usage }) => {
           if (session.user?.id) {
             try {
+              const tokens = usage?.totalTokens ?? 150;
+              await incrementTodayTokenUsage(session.user.id, tokens);
+
               const responseMessagesWithoutIncompleteToolCalls =
                 sanitizeResponseMessages(response.messages);
 
