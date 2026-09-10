@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useWindowSize } from "usehooks-ts";
 
 import { ModelSelector } from "@/components/model-selector";
 import { SidebarToggle } from "@/components/sidebar-toggle";
@@ -30,9 +29,7 @@ function PureChatHeader({
   isReadonly: boolean;
 }) {
   const router = useRouter();
-  const { open } = useSidebar();
-
-  const { width: windowWidth } = useWindowSize();
+  const { open, isMobile } = useSidebar();
 
   const { data: usage } = useSWR<{
     tokensUsed: number;
@@ -41,13 +38,13 @@ function PureChatHeader({
   }>("/api/user/usage", fetcher);
 
   return (
-    <header className="flex sticky top-0 bg-background py-2 items-center px-2 md:px-4 gap-2 justify-between z-10 border-b md:border-b-0 border-sidebar-border/50">
-      <div className="flex items-center gap-2.5 min-w-0">
-        <SidebarToggle />
+    <header className="sticky top-0 z-10 flex min-w-0 items-center justify-between gap-1 border-b border-sidebar-border/50 bg-background px-2 py-2 sm:gap-2 md:border-b-0 md:px-4">
+      <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2.5">
+        <SidebarToggle className="h-8 w-8 shrink-0 p-0 sm:h-9 sm:w-9 md:h-fit md:w-auto md:px-2" />
 
         <Link
           href="/"
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="flex min-w-0 shrink items-center gap-2 hover:opacity-80 transition-opacity"
         >
           <Image
             src="/logo.png"
@@ -57,26 +54,26 @@ function PureChatHeader({
             className="rounded-md object-contain size-6"
             unoptimized
           />
-          {(!open || windowWidth < 768) && (
-            <span className="font-semibold text-sm sm:text-base truncate">
+          {(!open || isMobile) && (
+            <span className="hidden truncate font-semibold text-sm sm:inline sm:text-base">
               {APP_NAME}
             </span>
           )}
         </Link>
 
-        {(!open || windowWidth < 768) && (
+        {(!open || isMobile) && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="outline"
-                className="px-2.5 h-8 md:h-[34px] text-xs sm:text-sm"
+                className="h-8 shrink-0 px-2.5 text-xs sm:h-[34px] sm:text-sm"
                 onClick={() => {
                   router.push("/");
                   router.refresh();
                 }}
               >
                 <PlusIcon />
-                <span className="hidden sm:inline ml-1">New Chat</span>
+                <span className="ml-1 hidden md:inline">New Chat</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>Open a new Chat</TooltipContent>
@@ -84,13 +81,16 @@ function PureChatHeader({
         )}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
         {usage && typeof usage.remainingTokens === "number" && (
           <div
-            className="flex items-center gap-1.5 px-3 py-1 bg-[#fef3c7] dark:bg-amber-950/60 text-[#d97706] dark:text-amber-400 border border-[#fde68a] dark:border-amber-800/50 rounded-full text-xs font-bold"
+            className="flex shrink-0 items-center gap-1 rounded-full border border-[#fde68a] bg-[#fef3c7] px-2 py-1 text-xs font-bold text-[#d97706] dark:border-amber-800/50 dark:bg-amber-950/60 dark:text-amber-400 sm:gap-1.5 sm:px-3"
             title={`Used ${usage.tokensUsed} of ${usage.dailyLimit} daily tokens. Resets at midnight UTC.`}
           >
-            <span>
+            <span className="sm:hidden">
+              {Math.ceil(usage.remainingTokens / 1000)}k
+            </span>
+            <span className="hidden sm:inline">
               {usage.remainingTokens.toLocaleString()} / {Math.round(usage.dailyLimit / 1000)}k tokens
             </span>
           </div>

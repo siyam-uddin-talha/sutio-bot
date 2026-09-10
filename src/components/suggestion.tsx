@@ -28,8 +28,8 @@ export const Suggestion = ({
       {!isExpanded ? (
         <motion.div
           className={cn('cursor-pointer text-muted-foreground p-1', {
-            'absolute -right-8': blockKind === 'text',
-            'sticky top-0 right-4': blockKind === 'code',
+            'absolute right-1 sm:-right-8': blockKind === 'text',
+            'sticky top-0 right-2 sm:right-4': blockKind === 'code',
           })}
           onClick={() => {
             setIsExpanded(true);
@@ -41,7 +41,7 @@ export const Suggestion = ({
       ) : (
         <motion.div
           key={suggestion.id}
-          className="absolute bg-background p-3 flex flex-col gap-3 rounded-2xl border text-sm w-56 shadow-xl z-50 -right-12 md:-right-16 font-sans"
+          className="absolute right-2 z-50 flex max-h-[min(18rem,calc(100dvh-2rem))] w-56 max-w-[calc(100vw-1rem)] flex-col gap-3 overflow-y-auto rounded-2xl border bg-background p-3 font-sans text-sm shadow-xl sm:-right-12 md:-right-16"
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: -20 }}
@@ -66,7 +66,7 @@ export const Suggestion = ({
           <div>{suggestion.description}</div>
           <Button
             variant="outline"
-            className="w-fit py-1.5 px-3 rounded-full"
+            className="min-h-10 w-full rounded-full px-3 py-1.5 sm:min-h-0 sm:w-fit"
             onClick={onApply}
           >
             Apply

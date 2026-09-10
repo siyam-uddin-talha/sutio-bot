@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 
 import { AuthForm } from "@/components/auth-form";
 import { SubmitButton } from "@/components/submit-button";
+import { APP_NAME } from "@/lib/config";
 
 import {
   oneClickRegister,
@@ -71,6 +73,22 @@ export default function Page() {
     <div className="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl gap-12 flex flex-col">
         <div className="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
+          <Link
+            href="/"
+            className="mb-3 flex items-center gap-2 transition-opacity hover:opacity-80"
+          >
+            <Image
+              src="/logo.png"
+              width={32}
+              height={32}
+              alt={`${APP_NAME} logo`}
+              className="size-8 rounded-lg object-contain"
+              unoptimized
+            />
+            <span className="font-outfit text-lg font-semibold text-[#451a03] dark:text-zinc-50">
+              {APP_NAME}
+            </span>
+          </Link>
           <h3 className="text-xl font-semibold dark:text-zinc-50">Sign Up</h3>
           <p className="text-sm text-gray-500 dark:text-zinc-400">
             Create an account with your email and password

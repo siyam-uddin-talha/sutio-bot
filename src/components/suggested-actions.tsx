@@ -177,7 +177,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
       : ALL_SUGGESTED_ACTIONS.slice(0, 4);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+    <div className="grid w-full grid-cols-2 gap-1.5 sm:gap-2">
       {currentActions.map((suggestedAction, index) => (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -185,7 +185,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.05 * index }}
           key={`suggested-action-${suggestedAction.title}-${index}`}
-          className="block"
+          className="block min-w-0"
         >
           <Button
             variant="ghost"
@@ -197,12 +197,12 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
                 content: suggestedAction.action,
               });
             }}
-            className="text-left bg-[#fffefb] dark:bg-neutral-900/80 border border-[#f4e2c6]/70 dark:border-neutral-800 hover:border-[#d97706] hover:bg-[#fef3c7]/30 transition-all duration-300 rounded-3xl px-5 py-4 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start shadow-[0_10px_30px_rgba(217,119,6,0.03)]"
+            className="h-full min-h-[3.5rem] w-full min-w-0 flex-col items-start justify-start gap-0 whitespace-normal rounded-xl border border-[#f4e2c6]/70 bg-[#fffefb] px-2.5 py-1.5 text-left text-xs shadow-[0_10px_30px_rgba(217,119,6,0.03)] transition-all duration-300 hover:border-[#d97706] hover:bg-[#fef3c7]/30 dark:border-neutral-800 dark:bg-neutral-900/80 sm:min-h-[5rem] sm:rounded-2xl sm:px-3 sm:py-2 sm:text-sm"
           >
-            <span className="font-outfit font-bold tracking-tight text-[#451a03] dark:text-[#fdf9f0] text-base">
+            <span className="font-outfit text-[13px] font-bold leading-tight tracking-tight text-[#451a03] dark:text-[#fdf9f0] sm:text-sm">
               {suggestedAction.title}
             </span>
-            <span className="text-[#78350f] dark:text-amber-200/70 text-xs">
+            <span className="text-[10px] leading-tight text-[#78350f] dark:text-amber-200/70 sm:text-[11px]">
               {suggestedAction.label}
             </span>
           </Button>

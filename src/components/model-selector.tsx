@@ -39,8 +39,8 @@ export function ModelSelector({
           className,
         )}
       >
-        <Button variant="outline" className="md:px-2 md:h-[34px]">
-          {selectedModel?.label}
+        <Button variant="outline" className="h-8 max-w-[9.5rem] px-2 text-xs sm:h-[34px] sm:px-2 sm:text-sm">
+          <span className="truncate">{selectedModel?.label}</span>
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
